@@ -1,0 +1,3 @@
+1) sizeof is designed to only work for data types and statically declared arrays and structs.
+2) In C99 there are VLA's (variable length arrays) whose size is determined at runtime, but the memory
+   is still allocated statucally (stach based) and hence sizeof works on VLA's.
