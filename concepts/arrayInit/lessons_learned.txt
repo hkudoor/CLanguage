@@ -1,0 +1,5 @@
+1) global and static variables are ALWAYS initialized to 0
+2) array[10] = {1};
+   sets only array[0] = 1 and sets the rest of the elements of array=0;
+3) memset(void* str, char c, size_t n) 
+is meant to fill a block of BYTES with a constant 8 bit value c. So it cannot be used
