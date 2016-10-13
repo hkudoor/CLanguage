@@ -1,0 +1,4 @@
+1) a global pointer is initialized to 0
+2) a local pointer is uninitialized and can assume a random value. this is known as a bad pointer.
+   dereferencing a bad pointer has unpredicatble consequences for a program and can cause immediate
+   or delayed crashes.
