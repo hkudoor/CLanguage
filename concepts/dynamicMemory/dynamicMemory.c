@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include<utils.h>
 
 // defines
 #define NUM_BYTES 100
@@ -14,12 +15,20 @@ void main() {
     int* ptrCalloc;
     
     ptrMalloc = (char*)malloc(NUM_BYTES);
-    if(ptrMalloc)
-        printf("Malloc Size = %d\n", sizeof(ptrMalloc));
+    ptrMalloc[1] = 5;
+    if(ptrMalloc) {
+        printf("Malloc Array\n");
+        printCharArray(ptrMalloc, NUM_BYTES);
+    }
 
     ptrCalloc = (int*)calloc(NUM_INTS, sizeof(int));
-    if(ptrCalloc)
-        printf("Calloc Size = %d\n",sizeof(ptrCalloc));
+    ptrCalloc[1] = -5;
+    if(ptrCalloc) {
+        printf("Calloc Array\n");
+        printIntArray(ptrCalloc, NUM_INTS);
+    }
 
+    free(ptrMalloc);
+    free(ptrCalloc);
     getchar();
 }
