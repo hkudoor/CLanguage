@@ -1,23 +1,13 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-
-// defines
-
-
-
-// globals
-
-
-
-// utility functions
+// helper functions
 char returnChar() {
     char tmp=5;
     return tmp;
 }
 
-
-//main
+// main
 void main(int argc, char* argv[]) {
     char charFromFunc=0;
     charFromFunc = returnChar();
