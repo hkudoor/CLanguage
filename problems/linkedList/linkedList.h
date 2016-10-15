@@ -5,11 +5,11 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-// defines
-
-
-// globals
-
+// enums
+typedef enum _bool { 
+    false, 
+    true
+} bool;
 
 // Interface
 
@@ -30,3 +30,12 @@ void printListSll(SllNode* node);
 
 /* compute length of list */
 unsigned int sllLength(SllNode* node);
+
+/* find last Element */
+SllNode* findLastElement(SllNode* head); 
+
+/* push a new element to the front of a list */
+bool pushAtFront(SllNode** head, int data);
+
+/* append element to the end of a list */
+bool appendAtEnd(SllNode** headRef, int data);

@@ -57,3 +57,49 @@ unsigned int sllLength(SllNode* node) {
    }
    return length;
 }
+
+/* find last Element */
+SllNode* findLastElement(SllNode* head) {
+    SllNode* runner = head;
+    if(runner == NULL) {
+        return NULL;
+    }
+    while(runner->next != NULL) {
+        runner = runner->next;
+    }
+    return runner;
+}
+
+/* push a new element to the front of a list */
+bool pushAtFront(SllNode** headRef, int data) {
+    SllNode* newNode;
+    newNode = malloc(sizeof(SllNode));
+    if (newNode == NULL) {
+        return false;
+    }
+    newNode->data = data;
+    newNode->next = *headRef;
+    *headRef = newNode;
+    return true;
+}
+
+/* append element to the end of a list */
+bool appendAtEnd(SllNode** headRef, int data) {
+    SllNode* newNode;
+    SllNode* tail;
+    newNode = malloc(sizeof(SllNode));
+    if(newNode == NULL) {
+        return false;
+    }
+
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if(*headRef == NULL) {
+        *headRef = newNode;
+    } else {
+        tail = findLastElement(*headRef);
+        tail->next = newNode;
+    }
+    return true;
+}
