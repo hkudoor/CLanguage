@@ -43,3 +43,17 @@ void printListSll(SllNode* node) {
     }
     printf("- %d |\n", runner->data);
 }
+
+/* compute length of list */
+unsigned int sllLength(SllNode* node) {
+   unsigned int length = 1;
+   SllNode* runner = node;
+   if (node == NULL) {
+       return 0;
+   }
+   while(runner->next != NULL) {
+       length++;
+       runner = runner->next;
+   }
+   return length;
+}

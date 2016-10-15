@@ -34,5 +34,6 @@ void main() {
 
     // print list
     printListSll(head);
+    printf("Length = %u\n", sllLength(head));
     getchar();
 }

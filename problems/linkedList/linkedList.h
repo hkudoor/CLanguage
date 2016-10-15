@@ -27,3 +27,6 @@ void deleteSllNode(SllNode* node);
 
 /* print list */
 void printListSll(SllNode* node);
+
+/* compute length of list */
+unsigned int sllLength(SllNode* node);
