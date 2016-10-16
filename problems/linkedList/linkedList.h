@@ -39,3 +39,6 @@ bool pushAtFront(SllNode** head, int data);
 
 /* append element to the end of a list */
 bool appendAtEnd(SllNode** headRef, int data);
+
+/* make a copy of a list */
+SllNode* copyList(SllNode* head);

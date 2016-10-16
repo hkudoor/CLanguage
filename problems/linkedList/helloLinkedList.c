@@ -7,6 +7,7 @@
 
 // globals
 SllNode* head;
+SllNode* newList;
 
 // main
 void main() {
@@ -33,18 +34,41 @@ void main() {
         runner = runner->next;
     }
 
+    // print List
     printListSll(head);
     printf("Length = %u\n", sllLength(head));
 
-    printf("Pushing new element at front\n");
+    // add element at the front
+    printf("\nPushing new element at front\n");
     result = pushAtFront(&head, 42);
-    printListSll(head);
-    printf("Length = %u\n", sllLength(head));
+    if(result == true) {
+        printListSll(head);
+        printf("Length = %u\n", sllLength(head));
+    } else {
+        return;
+    }
 
-    printf("Appending new element at the end\n");
+    // add element at the end
+    printf("\nAppending new element at the end\n");
     result = appendAtEnd(&head, 100);
-    printListSll(head);
-    printf("Length = %u\n", sllLength(head));
+    if(result == true) {
+        printListSll(head);
+        printf("Length = %u\n", sllLength(head));
+    } else {
+        return;
+    }
 
+
+    // copy List
+    printf("\nCopying list\n");
+    newList = copyList(head);
+    if(newList != NULL) {
+        printListSll(newList);
+        printf("Length = %u\n", sllLength(newList));
+    } else {
+        return;
+    }
+
+    // cleanup
     getchar();
 }

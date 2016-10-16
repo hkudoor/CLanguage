@@ -103,3 +103,33 @@ bool appendAtEnd(SllNode** headRef, int data) {
     }
     return true;
 }
+
+/* make a copy of a list */
+SllNode* copyList(SllNode* head) {
+    SllNode* newHead;
+    SllNode* runner = head;
+    bool result=false;
+    if(runner == NULL) {
+        return NULL;
+    }
+
+    newHead = malloc(sizeof(SllNode));
+    if(newHead == NULL) {
+        printf("ERR : Out of memory\n");
+        return NULL;
+    }
+
+    newHead->data = runner->data;
+    runner = runner->next;
+    while(runner->next != NULL) {
+        result = appendAtEnd(&newHead, runner->data);
+        if(result == false) {
+            printf("ERR : Append failed\n");
+            return NULL;
+        }
+        runner = runner->next;
+    }
+    result = appendAtEnd(&newHead, runner->data);
+    
+    return newHead;
+}
