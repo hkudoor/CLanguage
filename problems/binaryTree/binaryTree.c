@@ -93,3 +93,19 @@ int bstFindMax(BtNode* root) {
 		return bstFindMax(root->right);
 	}
 }
+
+/* find number of nodes in a binary tree */
+int btFindNumNodes(BtNode* root) {
+	if(root == NULL) {
+		return 0;
+	} else {
+		return btFindNumNodes(root->left) + btFindNumNodes(root->right) + 1;
+	}
+}
+
+/* find max depth of a binary tree */
+int btFindMaxDepth(BtNode* root) {
+    static int currentDepth;
+	return 0;
+		
+}

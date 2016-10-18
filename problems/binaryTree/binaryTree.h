@@ -40,3 +40,9 @@ int bstFindMin(BtNode* root);
 
 /* find maximum in a BST */
 int bstFindMax(BtNode* root);
+
+/* find number of nodes in a binary tree */
+int btFindNumNodes(BtNode* root);
+
+/* find max depth of a binary tree */
+int btFindMaxDepth(BtNode* root);
