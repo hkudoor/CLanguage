@@ -25,6 +25,13 @@ void main() {
         val = (int)(rand()%MAX) + 1;
         newNode = bstInsert(&root, val);
 	}
+	printf("Minimum = %d\n", bstFindMin(root));
+	printf("Maximum = %d\n", bstFindMax(root));
+	printf("\n");
 	btPrint(root);
+	printf("\n");
+	btPrintInOrder(root);
+	printf("\n");
+	getchar();
 }
 
