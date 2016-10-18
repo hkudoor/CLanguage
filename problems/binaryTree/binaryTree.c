@@ -58,3 +58,38 @@ void btPrint(BtNode* root) {
         btPrint(root->right);
     }
 }
+
+/* print binary tree in-order */
+void btPrintInOrder(BtNode* root) {
+	if(root->left == NULL && root->right == NULL) {
+		printf("%d   ", root->data);
+	} else if (root->left == NULL && root->right != NULL) {
+		printf("%d  ", root->data);
+		btPrintInOrder(root->right);
+	} else if (root->left != NULL && root->right == NULL) {
+		btPrintInOrder(root->left);
+		printf("%d  ", root->data);
+	} else {
+		btPrintInOrder(root->left);
+		printf("%d  ", root->data);
+		btPrintInOrder(root->right);
+	}
+}
+
+/* find minimum in a BST */
+int bstFindMin(BtNode* root) {
+	if(root->left == NULL) {
+		return root->data;
+	} else {
+		return bstFindMin(root->left);
+	}
+}
+
+/* find maximum in a BST */
+int bstFindMax(BtNode* root) {
+	if(root->right == NULL) {
+		return root->data;
+	} else {
+		return bstFindMax(root->right);
+	}
+}

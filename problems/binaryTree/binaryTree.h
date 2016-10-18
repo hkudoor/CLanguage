@@ -32,3 +32,11 @@ BtNode* bstInsert(BtNode** rootRef, int val);
 /* print binary tree */
 void btPrint(BtNode* root);
 
+/* print binary tree in-order */
+void btPrintInOrder(BtNode* root);
+
+/* find minimum in a BST */
+int bstFindMin(BtNode* root);
+
+/* find maximum in a BST */
+int bstFindMax(BtNode* root);
