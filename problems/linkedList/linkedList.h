@@ -1,6 +1,5 @@
 #ifndef _LINKED_LIST_H_
 #define _LINKED_LIST_H_
-#endif
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -42,3 +41,5 @@ bool appendAtEnd(SllNode** headRef, int data);
 
 /* make a copy of a list */
 SllNode* copyList(SllNode* head);
+
+#endif
