@@ -62,7 +62,7 @@ void btPrint(BtNode* root) {
 /* print binary tree in-order */
 void btPrintInOrder(BtNode* root) {
 	if(root->left == NULL && root->right == NULL) {
-		printf("%d   ", root->data);
+		printf("%d  ", root->data);
 	} else if (root->left == NULL && root->right != NULL) {
 		printf("%d  ", root->data);
 		btPrintInOrder(root->right);
@@ -74,6 +74,23 @@ void btPrintInOrder(BtNode* root) {
 		printf("%d  ", root->data);
 		btPrintInOrder(root->right);
 	}
+}
+
+/* print binary tree post-order */
+void btPrintPostOrder(BtNode* root) {
+    if(root->left == NULL && root->right == NULL) {
+        printf("%d  ", root->data);
+    } else if(root->left == NULL && root->right != NULL) {
+        btPrintPostOrder(root->right);
+        printf("%d  ", root->data);
+    } else if(root->left != NULL && root->right == NULL) {
+        btPrintPostOrder(root->left);
+        printf("%d  ", root->data);
+    } else {
+        btPrintPostOrder(root->left);
+        btPrintPostOrder(root->right);
+        printf("%d  ", root->data);
+    }
 }
 
 /* find minimum in a BST */

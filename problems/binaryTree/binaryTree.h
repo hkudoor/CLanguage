@@ -35,6 +35,9 @@ void btPrint(BtNode* root);
 /* print binary tree in-order */
 void btPrintInOrder(BtNode* root);
 
+/* print binary tree post-order */
+void btPrintPostOrder(BtNode* root);
+
 /* find minimum in a BST */
 int bstFindMin(BtNode* root);
 

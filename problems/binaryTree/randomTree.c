@@ -32,6 +32,8 @@ void main() {
 	printf("\n");
 	btPrintInOrder(root);
 	printf("\n");
+	btPrintPostOrder(root);
+	printf("\n");
 	printf("Number of Nodes = %d\n", btFindNumNodes(root));
 	printf("\n");
 	printf("Max Depth = %d\n", btFindMaxDepth(root));
