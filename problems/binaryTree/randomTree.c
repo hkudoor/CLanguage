@@ -6,7 +6,7 @@
 
 // defines
 #define MAX (50)
-#define NUM_NODES (20)
+#define NUM_NODES (25)
 
 // main
 void main() {

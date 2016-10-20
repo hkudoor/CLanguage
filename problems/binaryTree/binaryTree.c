@@ -122,7 +122,15 @@ int btFindNumNodes(BtNode* root) {
 
 /* find max depth of a binary tree */
 int btFindMaxDepth(BtNode* root) {
-    static int currentDepth;
-	return 0;
-		
+    static int currentDepth = 0;
+	static int maxDepth = 0;
+	if(root == NULL) {
+		maxDepth = (maxDepth>currentDepth) ? maxDepth : currentDepth;
+	} else {
+		currentDepth++;
+		maxDepth = btFindMaxDepth(root->left);
+		maxDepth = btFindMaxDepth(root->right);
+		currentDepth--;
+	}
+	return maxDepth;
 }
