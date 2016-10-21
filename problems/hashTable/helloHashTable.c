@@ -5,7 +5,8 @@
 // defines
 #define MAX 50
 #define FILE_NAME "scorecard.txt"
-#define VALID_NAME "naomi"
+#define VALID_NAME1 "naomi"
+#define VALID_NAME2 "manish"
 #define INVALID_NAME "harsha"
 
 // main
@@ -41,7 +42,8 @@ void main() {
 
     // retrieve valid entry
     score = -1;
-    result = retrieveValueFromTable(table, MAX, VALID_NAME, &score);
+    result = retrieveValueFromTable(table, MAX, VALID_NAME1, &score);
+    result = retrieveValueFromTable(table, MAX, VALID_NAME2, &score);
     result = retrieveValueFromTable(table, MAX, INVALID_NAME, &score);
     fclose(filePtr);
     

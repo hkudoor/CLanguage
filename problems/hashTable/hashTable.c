@@ -15,30 +15,6 @@ unsigned int hashFunction(char* key, unsigned int max) {
     return hash;
 }
 
-/* add element at a given hash index */
-void addElementAt(HashNode** table, HashNode* element, unsigned int hash) {
-    HashNode* node = table[hash];
-    if (node == NULL) {
-        node = element;
-        printf("-- Added key : %s, val : %d, at index : %u\n", element->key, element->val, hash);
-        return;
-    }
-
-    while(1) {
-        if (node->next != NULL) {
-            node = node->next;
-            continue;
-        } else {
-            break;
-        }
-    }
-    node->next = element;
-    printf("Added key : %s, val : %d, at index : %u\n", element->key, element->val, hash);
-}
-
-
-
-
 // Interface
 
 /* create hash table */
@@ -52,42 +28,58 @@ HashNode** createHashTable(unsigned int max) {
     return newTable;
 }
 
+/* print list */
+void printList(HashNode** nodeRef, int index) {
+    HashNode* node = nodeRef[index];
+    while(node != NULL) {
+        printf(" [%d - %s : %d] -> ", index, node->key, node->val);
+        node = node->next;
+    }
+    printf("X\n");
+}
+
 /* print hash table */
 void printTable(HashNode** table, unsigned int max) {
     int index=0;
+    printf("---------- TABLE -----------\n");
     for(index = 0; index<max; index++) {
         if(table[index] == NULL) {
-            printf("%d - NULL\n", index);
+            continue;
         } else {
-            printf("%d - %s, %d\n", index, table[index]->key, table[index]->val);
+            printList(table, index);
         }
     }
+    printf("\n");
 }
 
 /* add to hash table */
 bool addToHashTable(HashNode** table, unsigned int max, char* key, int val) {
-   unsigned int hash = 0;
-   HashNode* newNode = NULL;
-   if(table == NULL) {
-       return false;
-   }
-   hash = hashFunction(key, max);
-   newNode = table[hash];
+    unsigned int hash = 0;
+    HashNode* newNode;
+    HashNode* runner;
 
-   if (newNode != NULL) {
-       while(newNode->next != NULL) {
-           newNode = newNode->next;
-       }
-       newNode = newNode->next;
-   }
+    newNode = (HashNode*)malloc(sizeof(HashNode));
+    if(newNode) {
+       strncpy(newNode->key, key, strlen((const char*)key));
+       newNode->val = val;
+       newNode->next = NULL; 
+    } else {
+        return false;
+    }
 
-   newNode = (HashNode*)malloc(sizeof(HashNode));
-   if(!newNode) return false;
-
-   strncpy(newNode->key, key, strlen((const char*)key));
-   newNode->val = val;
-   newNode->next = NULL;
-   return true;
+    hash = hashFunction(key, max);
+    if(table[hash] == NULL) {
+        table[hash] = newNode;
+    } else {
+        printf("Collision - appending\n");
+        runner = table[hash];
+        while(runner->next != NULL) {
+            runner = runner->next;
+        }
+        runner->next = newNode;
+    }
+    printTable(table, max);  
+    return true;
 }
 
 /* retrieve from hash table */
@@ -96,28 +88,21 @@ bool retrieveValueFromTable(HashNode** table, unsigned int max, char* key, int* 
     HashNode* node = NULL;
     bool result = false;
     hash = hashFunction(key, max);
-    printf("INFO : RETRIEVAL - computed hash \"%u\"\n", hash);
     node = table[hash];
     if(node == NULL) {
+        printf("Entry NOT found \"%s\"\n", key);
         return false;
     }
 
-    printf("INFO : checkpoint1\n");
-    if(node->next == NULL) {
-        printf("INFO : RETRIEVAL - single element at index %u\n", hash);
-        *val = node->val;
-        result = true;
-    } else {
-        printf("INFO : checkpoint2\n");
-        while(node != NULL) {
-            if(strcmp(node->key, key) == 0) {
-                *val = node->val;
-                break;
-            }
-            node = node->next;
+    while(node != NULL) {
+        if(strcmp(node->key, key) == 0) {
+            *val = node->val;
+            result = true;
+            break;
         }
+        node = node->next;
     }
-    if(result) {
+    if(result == true) {
         printf("Entry found, %s = %d\n", key, *val);
     } else {
         printf("Entry NOT found \"%s\"\n", key);
