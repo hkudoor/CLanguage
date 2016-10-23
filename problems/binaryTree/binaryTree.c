@@ -2,6 +2,13 @@
 #include<stdio.h>
 #include<binaryTree.h>
 
+// helper functions
+
+/* find max of 2 integers */
+int max(int a, int b) {
+	return (a > b) ? a : b;
+}
+
 // Interface
 
 /* create node */
@@ -122,15 +129,14 @@ int btFindNumNodes(BtNode* root) {
 
 /* find max depth of a binary tree */
 int btFindMaxDepth(BtNode* root) {
-    static int currentDepth = 0;
-	static int maxDepth = 0;
-	if(root == NULL) {
-		maxDepth = (maxDepth>currentDepth) ? maxDepth : currentDepth;
-	} else {
-		currentDepth++;
-		maxDepth = btFindMaxDepth(root->left);
-		maxDepth = btFindMaxDepth(root->right);
-		currentDepth--;
+    if (root == NULL) {
+		return 0;
 	}
-	return maxDepth;
+	if (root->left == NULL) {
+		return (btFindMaxDepth(root->right) + 1);
+	}
+	if (root->right == NULL) {
+		return (btFindMaxDepth(root->left) + 1);
+	}
+	return (max(btFindMaxDepth(root->left), btFindMaxDepth(root->right)) + 1);
 }
