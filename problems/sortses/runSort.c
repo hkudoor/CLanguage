@@ -6,7 +6,7 @@
 
 // defines
 #define SIZE 10000
-#define MAX  2000
+#define MAX  20000
 
 // helper functions
 
@@ -30,7 +30,6 @@ void printArray(int* array, unsigned int size) {
 
 	}
 	printf("\n");
-
 }
 
 void slideRight(int* array, int start, int stop) {
@@ -39,6 +38,89 @@ void slideRight(int* array, int start, int stop) {
 		array[index+1] = array[index];
 	}
 }
+
+void slideLeft(int* array, int start, int stop) {
+	int index = start;
+	for(index = start; index<=stop; index++) {
+		array[index-1] = array[index];
+	}
+}
+
+void merge(int* array, unsigned int startIndex, unsigned int stopIndex) {
+    int firstHalfStopIndex = startIndex + (stopIndex-startIndex)/2;
+    int secondHalfStartIndex = firstHalfStopIndex + 1;
+    int firstHalfSize = (firstHalfStopIndex-startIndex+1);
+    int secondHalfSize = (stopIndex-secondHalfStartIndex+1);
+    int* firstHalf = (int*)malloc(sizeof(int)*firstHalfSize);
+    int* secondHalf = (int*)malloc(sizeof(int)*secondHalfSize);
+    int subArrayRunner;
+    int firstHalfRunner = 0, secondHalfRunner = 0;
+    int index;
+
+    // copy elements from sub array to firstHalf and secondHalf
+    for(index=startIndex; index<=stopIndex; index++) {
+        if(index < secondHalfStartIndex) {
+	    firstHalf[index-startIndex] = array[index];
+	} else {
+	    secondHalf[index-secondHalfStartIndex] = array[index];
+	}
+    }
+
+    // start merge
+    for(subArrayRunner=startIndex; subArrayRunner<=stopIndex; subArrayRunner++) {
+        if(firstHalfRunner == firstHalfSize) {
+	    array[subArrayRunner] = secondHalf[secondHalfRunner++];
+	} else if (secondHalfRunner == secondHalfSize) {
+	    array[subArrayRunner] = firstHalf[firstHalfRunner++];
+	} else {
+	    array[subArrayRunner] = (firstHalf[firstHalfRunner] < secondHalf[secondHalfRunner]) ?
+	                            firstHalf[firstHalfRunner++] : secondHalf[secondHalfRunner++];
+	}
+    }
+    // printArray(array, (stopIndex-startIndex+1));
+}
+
+/* pivot array around the selected element */
+int pivotArraySlide(int* array, unsigned int size) {
+    int pivotIndex = size-1;
+    int pivotElem = array[pivotIndex];
+    int subArrayRunner = size-2;
+    int currentElement = array[subArrayRunner];
+
+
+    for(subArrayRunner = size-2; subArrayRunner>=0; subArrayRunner--) {
+        currentElement = array[subArrayRunner];
+        if(currentElement > array[pivotIndex]) {
+	    slideLeft(array, subArrayRunner+1, pivotIndex);
+	    array[pivotIndex] = currentElement;
+	    pivotIndex--;
+	}
+    }
+    return pivotIndex;
+}
+
+/* pivot array around the selected element */
+int pivotArray(int* array, unsigned int size) {
+    int currentElement;
+    int pivotIndex = size-1;
+    int pivot = array[pivotIndex];
+    int groupGPointer = 0, groupUPointer = 0;
+
+    for(groupUPointer = 0; groupUPointer <= pivotIndex; groupUPointer++) {
+        if(groupUPointer == pivotIndex) {
+	    swap(&array[groupUPointer], &array[groupGPointer]);
+	    pivotIndex = groupGPointer;
+	    continue;
+	}
+	currentElement = array[groupUPointer];
+        if(currentElement < pivot) {
+	    swap(&array[groupUPointer], &array[groupGPointer]);
+	    groupGPointer++;
+	}
+    }
+    return pivotIndex;
+}
+
 
 // sort functions
 
@@ -71,7 +153,6 @@ void sortInsertion(int* array, unsigned int size) {
 			}
 		}
 		if(swapNeeded == false) {
-			// printArray(array, size);
 			continue;
 		} else {
 			swapNeeded = false;
@@ -79,18 +160,29 @@ void sortInsertion(int* array, unsigned int size) {
 			slideRight(array, runningIndex-1, subIndex);
 			array[subIndex] = key;
 		}
-		// printArray(array, size);
 	}
 }
 
 /* merge sort */
-void sortMerge(int* array, unsigned int size) {
-/*	if(size < 2) {
-		return;
-	}
-	size = size/2;
-	sortMerge(array, size/2
-*/
+void sortMerge(int* array, unsigned int startIndex, unsigned int stopIndex) {
+    if(startIndex >= stopIndex) {
+	return;
+    } else {
+	sortMerge(array, startIndex, startIndex + (stopIndex-startIndex)/2);
+	sortMerge(array, startIndex+((stopIndex-startIndex)/2)+1, stopIndex);
+    }
+    merge(array, startIndex, stopIndex);
+}
+
+/* quick sort */
+void sortQuick(int* array, int startIndex, int stopIndex) {
+    int pivotIndex;
+    if(startIndex >= stopIndex) {
+        return;
+    }
+    pivotIndex = pivotArray(array, (stopIndex-startIndex+1));
+    sortQuick(array, 0, pivotIndex-1);
+    sortQuick(&array[pivotIndex+1], 0, stopIndex-pivotIndex-1);
 }
 
 // main
@@ -116,7 +208,7 @@ void main() {
 	gettimeofday(&start, NULL);
 
 	// sort
-	sortInsertion(array, SIZE);
+	sortQuick(array, 0, SIZE-1);
 
 	// stop timer
 	gettimeofday(&stop, NULL);
